@@ -74,4 +74,8 @@ dependencies {
     implementation libs.androidx.ui
     implementation libs.material3
     implementation libs.androidx.activity.compose.v160
+    implementation(libs.androidx.fragment)
+    implementation(libs.androidx.fragment.ktx.v183)
+    implementation(libs.androidx.fragment.compose)
+    debugImplementation(libs.androidx.fragment.testing)
 }

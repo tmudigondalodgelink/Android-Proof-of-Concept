@@ -3,6 +3,7 @@ package com.example.architecturepoc2
 import android.content.Context
 import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.widget.FrameLayout
@@ -51,10 +52,18 @@ import com.example.architecturepoc2.databinding.FragmentContainerBinding
 import com.example.architecturepoc2.ui.theme.ArchitecturePOC2Theme
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentOnAttachListener
+import androidx.fragment.compose.AndroidFragment
+import androidx.fragment.compose.rememberFragmentState
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.architecturepoc2.View.PropertyDetailsView
+import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
-class MainActivity : FragmentActivity() {
+class MainActivity : FragmentActivity(), FragmentOnAttachListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -64,7 +73,7 @@ class MainActivity : FragmentActivity() {
                     BottomNavigationItem(
                     title = "Search",
                     selectedIcon = Icons.Filled.Search,
-                    unselectedIcon = Icons.Outlined.Search),
+                    unselectedIcon = Icons.Outlined.Search,),
                     BottomNavigationItem(
                         title = "Bookings",
                         selectedIcon = Icons.Filled.Email,
@@ -82,6 +91,10 @@ class MainActivity : FragmentActivity() {
 
                 val navController = rememberNavController()
 
+                val searchFragmentState = rememberFragmentState()
+                val myAccountViewState = rememberFragmentState()
+
+
                 val context = LocalContext.current
 
                 Scaffold(
@@ -94,9 +107,18 @@ class MainActivity : FragmentActivity() {
                                     onClick = {
                                         selectedItemIndex = index
                                         when (index) {
-                                            0 -> navController.navigate("search")
-                                            1 -> navController.navigate("bookings")
-                                            2 -> navController.navigate("myAccount")
+                                            0 -> navController.navigate("search") {
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                            1 -> navController.navigate("bookings") {
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                            2 -> navController.navigate("myAccount") {
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
                                             else -> navController.navigate("search")
                                         }
                                     },
@@ -112,56 +134,37 @@ class MainActivity : FragmentActivity() {
                         }
                     }
                 ) { innerPadding ->
+
                     NavHost(
                         navController = navController,
                         startDestination = "search",
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable("search") { FragmentHostComposable(SearchFragment::class, "searchFragment") }
-                        composable("bookings") { FragmentHostComposable(BookingsFragment::class, "bookingsFragment") }
-                        composable("myAccount") { FragmentHostComposable(MyAccountFragment::class, "myAccountFragment") }
+                        composable("search") { AndroidFragment<SearchFragment>(modifier = Modifier.fillMaxSize(), fragmentState = searchFragmentState) }
+                        composable("bookings") {
+                            val bookingFragmentState = rememberFragmentState()
+                            AndroidFragment<BookingsFragment>(
+                            modifier = Modifier.fillMaxSize(),
+                            fragmentState = bookingFragmentState,
+                        ) {
+                            it.navigateToPropertyDetails = { navController.navigate("propertyDetails"){
+                                launchSingleTop = true
+                                restoreState = true
+                            } }
+                        }}
+                        composable("myAccount") { MyAccountView() }
+                        composable("propertyDetails") { PropertyDetailsView() }
                     }
                 }
             }
         }
     }
-}
 
-@Composable
-fun FragmentHostComposable(fragment: Fragment, context: Context) {
-    val fragmentActivity = context as? FragmentActivity ?: return
+    override fun onAttachFragment(fragmentManager: FragmentManager, fragment: Fragment) {
+      (fragment as? BookingsFragment)?.let {
 
-    AndroidViewBinding(FragmentContainerBinding::inflate) {
-        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
-        transaction.replace(fragmentContainer.id, fragment)
-        transaction.commit()
+      }
     }
-}
-
-@Composable
-fun FragmentHostComposable(fragmentClass: KClass<out Fragment>, tag: String) {
-    val fragmentActivity = LocalActivity.current as FragmentActivity
-    val fragmentManager = fragmentActivity.supportFragmentManager
-    val containerId = remember { View.generateViewId() }
-
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { context ->
-            FrameLayout(context).apply { id = containerId }
-        },
-        update = { view ->
-            val existingFragment = fragmentManager.findFragmentByTag(tag)
-
-            fragmentManager.beginTransaction().apply {
-                if (existingFragment != null) {
-                    remove(existingFragment) // Remove the old fragment before adding a new one
-                }
-                val newFragment = fragmentClass.java.newInstance()
-                replace(view.id, newFragment, tag)
-                commitNow()
-            }
-        }
-    )
 }
 
 
@@ -170,3 +173,4 @@ data class BottomNavigationItem(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
 )
+
