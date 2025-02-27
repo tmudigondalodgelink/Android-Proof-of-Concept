@@ -58,12 +58,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentOnAttachListener
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.architecturepoc2.View.PropertyDetailsView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
-class MainActivity : FragmentActivity(), FragmentOnAttachListener {
+@AndroidEntryPoint
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -93,6 +96,7 @@ class MainActivity : FragmentActivity(), FragmentOnAttachListener {
 
                 val searchFragmentState = rememberFragmentState()
                 val myAccountViewState = rememberFragmentState()
+                val myAccountViewModel: MyAccountViewModel = hiltViewModel()
 
 
                 val context = LocalContext.current
@@ -158,12 +162,6 @@ class MainActivity : FragmentActivity(), FragmentOnAttachListener {
                 }
             }
         }
-    }
-
-    override fun onAttachFragment(fragmentManager: FragmentManager, fragment: Fragment) {
-      (fragment as? BookingsFragment)?.let {
-
-      }
     }
 }
 

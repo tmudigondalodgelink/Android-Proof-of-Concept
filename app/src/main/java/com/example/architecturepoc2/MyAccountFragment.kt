@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 //class MyAccountFragment : Fragment() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +39,8 @@ import androidx.compose.ui.unit.sp
 //}
 
 @Composable
-fun MyAccountView() {
-    var counter by remember { mutableStateOf(0) }
+fun MyAccountView(viewModel: MyAccountViewModel = hiltViewModel()) {
+    val counter by viewModel.counter.collectAsState()
 
     Box(
         modifier = Modifier
@@ -46,7 +48,7 @@ fun MyAccountView() {
             .background(Color(0xFFBBDEFB)),
         contentAlignment = Alignment.Center
     ) {
-        Column {
+        Column{
             Text(
                 text = "My Account",
                 fontSize = 24.sp,
@@ -55,7 +57,7 @@ fun MyAccountView() {
             )
             Text(text = "Counter: $counter", style = MaterialTheme.typography.headlineMedium)
 
-            Button(onClick = { counter++ }) {
+            Button(onClick = { viewModel.increment() }) {
                 Text(text = "Increase")
             }
         }
