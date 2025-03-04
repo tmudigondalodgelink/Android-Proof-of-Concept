@@ -56,17 +56,21 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentOnAttachListener
+import androidx.fragment.app.commit
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.architecturepoc2.View.NestedView2
 import com.example.architecturepoc2.View.PropertyDetailsView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -96,7 +100,6 @@ class MainActivity : FragmentActivity() {
 
                 val searchFragmentState = rememberFragmentState()
                 val myAccountViewState = rememberFragmentState()
-                val myAccountViewModel: MyAccountViewModel = hiltViewModel()
 
 
                 val context = LocalContext.current
@@ -138,6 +141,7 @@ class MainActivity : FragmentActivity() {
                         }
                     }
                 ) { innerPadding ->
+                    val myAccountViewModel: MyAccountViewModel = hiltViewModel()
 
                     NavHost(
                         navController = navController,
@@ -151,13 +155,14 @@ class MainActivity : FragmentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             fragmentState = bookingFragmentState,
                         ) {
-                            it.navigateToPropertyDetails = { navController.navigate("propertyDetails"){
+                            it.navigateToPropertyDetails = { navController.navigate("propertyDetails") {
                                 launchSingleTop = true
                                 restoreState = true
                             } }
                         }}
-                        composable("myAccount") { MyAccountView() }
-                        composable("propertyDetails") { PropertyDetailsView() }
+                        composable("myAccount") { MyAccountView(myAccountViewModel) }
+                        composable("propertyDetails") { PropertyDetailsView(navController = navController) }
+                        composable("nestedView2") { NestedView2() }
                     }
                 }
             }

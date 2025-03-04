@@ -12,11 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 
-class BookingsFragment : Fragment() {
+@AndroidEntryPoint
+class BookingsFragment: Fragment() {
 
+    private val viewModel: BookingsViewModel by activityViewModels()
     var navigateToPropertyDetails: () -> Unit = {}
 
     override fun onCreateView(
@@ -25,14 +31,16 @@ class BookingsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                CounterScreen()
+                setContent {
+                    CounterScreen(viewModel)
+                }
             }
         }
     }
 
     @Composable
-    fun CounterScreen() {
-        var counter by remember { mutableStateOf(0) }
+    fun CounterScreen(viewModel: BookingsViewModel) {
+        val counter by viewModel.counter.collectAsState()
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,7 +50,7 @@ class BookingsFragment : Fragment() {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Counter: $counter", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { counter++ }) {
+            Button(onClick = { viewModel.increment() }) {
                 Text(text = "Increase")
             }
             Button(onClick = { navigateToPropertyDetails() }) {

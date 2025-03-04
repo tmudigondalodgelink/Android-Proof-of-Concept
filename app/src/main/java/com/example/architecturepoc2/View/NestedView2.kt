@@ -16,23 +16,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.architecturepoc2.MyAccountViewModel
+import com.example.architecturepoc2.NestedView2ViewModel
 import com.example.architecturepoc2.PropertyDetailsViewModel
 
 @Composable
-fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), navController: NavController) {
+fun NestedView2(viewModel: NestedView2ViewModel = hiltViewModel()) {
     val counter by viewModel.counter.collectAsState()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFBBDEFB)),
+            .background(Color(0xFFFFCC80)),
         contentAlignment = Alignment.Center
     ) {
         Column{
             Text(
-                text = "Property Details",
+                text = "Nested View 2",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -41,10 +41,6 @@ fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), n
 
             Button(onClick = { viewModel.increment() }) {
                 Text(text = "Increase")
-            }
-
-            Button(onClick = { navController.navigate("nestedView2") }) {
-                Text(text = "Navigate to Nested View 2")
             }
         }
     }
