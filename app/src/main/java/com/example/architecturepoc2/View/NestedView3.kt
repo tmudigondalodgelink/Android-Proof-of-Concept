@@ -16,10 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.architecturepoc2.NestedView3ViewModel
 
 @Composable
-fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel()) {
+fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel(), navController: NavController) {
     val counter by viewModel.counter.collectAsState()
 
     Box(
@@ -39,6 +40,10 @@ fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel()) {
 
             Button(onClick = { viewModel.increment() }) {
                 Text(text = "Increase")
+            }
+
+            Button(onClick = { navController.navigate("nestedFragment4") }) {
+                Text(text = "Navigate to Nested Fragment 4")
             }
         }
     }

@@ -151,7 +151,9 @@ class MainActivity : FragmentActivity() {
                             }
                         }
                         composable("myAccount") { MyAccountView(myAccountViewModel) }
+
                         composable("propertyDetails") { PropertyDetailsView(navController = navController) }
+
                         composable("nestedFragment1") {
                             AndroidFragment<NestedFragment1>(
                                 modifier = Modifier.fillMaxSize(),
@@ -169,7 +171,12 @@ class MainActivity : FragmentActivity() {
                                 modifier = Modifier.fillMaxSize(),
                             ) }
 
-                        composable("nestedView3") { NestedView3() }
+                        composable("nestedView3") { NestedView3(navController = navController) }
+
+                        composable("nestedFragment4") {
+                            AndroidFragment<NestedFragment4>(
+                                modifier = Modifier.fillMaxSize(),
+                            ) }
                     }
                 }
             }

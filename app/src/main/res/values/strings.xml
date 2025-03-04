@@ -7,4 +7,5 @@
     <string name="my_account_fragment">My Account Fragment</string>
     <string name="nested_fragment_1">Nested Fragment 1</string>
     <string name="nested_fragment_2">Nested Fragment 2</string>
+    <string name="nested_fragment_4">Nested Fragment 4</string>
 </resources>
