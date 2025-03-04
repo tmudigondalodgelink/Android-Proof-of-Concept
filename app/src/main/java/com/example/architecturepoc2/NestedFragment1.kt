@@ -8,21 +8,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.architecturepoc2.databinding.FragmentNestedFragment1Binding
 import com.example.architecturepoc2.databinding.FragmentSearchBinding
 
-class SearchFragment : Fragment() {
-
-    private var _binding: FragmentSearchBinding? = null
+class NestedFragment1 : Fragment() {
+    private var _binding: FragmentNestedFragment1Binding? = null
     private val binding get() = _binding!!
-    private val viewModel: SearchViewModel by activityViewModels()
-    var navigateToNestedFragment1: () -> Unit = {}
+    private val viewModel: NestedFragment2ViewModel by viewModels()
+    var navigateToNestedFragment2: () -> Unit = {}
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentNestedFragment1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,7 +44,7 @@ class SearchFragment : Fragment() {
             }
 
             navigateButton.setOnClickListener {
-                navigateToNestedFragment1()
+                navigateToNestedFragment2()
             }
         }
     }

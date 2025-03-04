@@ -16,12 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.architecturepoc2.MyAccountViewModel
-import com.example.architecturepoc2.NestedView2ViewModel
-import com.example.architecturepoc2.PropertyDetailsViewModel
+import com.example.architecturepoc2.NestedView3ViewModel
 
 @Composable
-fun NestedView2(viewModel: NestedView2ViewModel = hiltViewModel()) {
+fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel()) {
     val counter by viewModel.counter.collectAsState()
 
     Box(
@@ -32,7 +30,7 @@ fun NestedView2(viewModel: NestedView2ViewModel = hiltViewModel()) {
     ) {
         Column{
             Text(
-                text = "Nested View 2",
+                text = "Nested View 3",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White

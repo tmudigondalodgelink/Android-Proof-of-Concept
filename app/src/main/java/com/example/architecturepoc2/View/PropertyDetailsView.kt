@@ -43,8 +43,8 @@ fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), n
                 Text(text = "Increase")
             }
 
-            Button(onClick = { navController.navigate("nestedView2") }) {
-                Text(text = "Navigate to Nested View 2")
+            Button(onClick = { navController.navigate("nestedView3") }) {
+                Text(text = "Navigate to Nested View 3")
             }
         }
     }

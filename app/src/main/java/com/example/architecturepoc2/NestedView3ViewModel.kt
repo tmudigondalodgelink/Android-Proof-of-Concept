@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class NestedView2ViewModel @Inject constructor() : ViewModel(){
+class NestedView3ViewModel @Inject constructor() : ViewModel(){
     private val _counter = MutableStateFlow(0)
     val counter: StateFlow<Int> = _counter.asStateFlow()
 

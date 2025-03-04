@@ -5,4 +5,6 @@
     <string name="search_fragment">Search Fragment</string>
     <string name="bookings_fragment">Bookings Fragment</string>
     <string name="my_account_fragment">My Account Fragment</string>
+    <string name="nested_fragment_1">Nested Fragment 1</string>
+    <string name="nested_fragment_2">Nested Fragment 2</string>
 </resources>
