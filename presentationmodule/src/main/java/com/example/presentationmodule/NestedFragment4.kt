@@ -1,16 +1,12 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.architecturepoc2.databinding.FragmentNestedFragment1Binding
-import com.example.architecturepoc2.databinding.FragmentNestedFragment4Binding
-import com.example.architecturepoc2.databinding.FragmentSearchBinding
+import com.example.presentationmodule.databinding.FragmentNestedFragment4Binding
 
 class NestedFragment4 : Fragment() {
     private var _binding: FragmentNestedFragment4Binding? = null

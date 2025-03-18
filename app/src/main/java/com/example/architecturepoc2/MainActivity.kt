@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.architecturepoc2
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -31,6 +31,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.presentationmodule.BookingsFragment
+import com.example.presentationmodule.MyAccountView
+import com.example.presentationmodule.MyAccountViewModel
+import com.example.presentationmodule.NestedFragment1
+import com.example.presentationmodule.NestedFragment2
+import com.example.presentationmodule.NestedFragment4
+import com.example.presentationmodule.NestedView3
+import com.example.presentationmodule.PropertyDetailsView
+import com.example.presentationmodule.SearchFragment
 import com.example.presentationmodule.theme.ArchitecturePOC2Theme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,18 +1,15 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.architecturepoc2.databinding.FragmentNestedFragment1Binding
-import com.example.architecturepoc2.databinding.FragmentSearchBinding
+import com.example.presentationmodule.databinding.FragmentNested1Binding
 
 class NestedFragment1 : Fragment() {
-    private var _binding: FragmentNestedFragment1Binding? = null
+    private var _binding: FragmentNested1Binding? = null
     private val binding get() = _binding!!
     private val viewModel: NestedFragment2ViewModel by viewModels()
     var navigateToNestedFragment2: () -> Unit = {}
@@ -22,7 +19,7 @@ class NestedFragment1 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNestedFragment1Binding.inflate(inflater, container, false)
+        _binding = FragmentNested1Binding.inflate(inflater, container, false)
         return binding.root
     }
 

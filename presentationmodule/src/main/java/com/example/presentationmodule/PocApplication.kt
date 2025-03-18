@@ -1,4 +1,4 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 //
 //import android.app.Application
 //import dagger.hilt.android.HiltAndroidApp

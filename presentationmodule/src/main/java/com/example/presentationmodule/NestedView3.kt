@@ -1,4 +1,4 @@
-package com.example.architecturepoc2.View
+package com.example.presentationmodule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.architecturepoc2.NestedView3ViewModel
 
 @Composable
 fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel(), navController: NavController) {

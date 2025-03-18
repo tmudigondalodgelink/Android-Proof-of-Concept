@@ -1,4 +1,4 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 
 import androidx.lifecycle.ViewModel
 import com.example.domainmodule.usecases.ITestUseCase

@@ -1,8 +1,4 @@
-package com.example.architecturepoc2
-
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentFactory
-import javax.inject.Inject
+package com.example.presentationmodule
 
 //class BookingsFragmentFactory @Inject constructor(
 //    private val bookingsViewModel: BookingsViewModel

@@ -1,4 +1,4 @@
-package com.example.architecturepoc2.ui.theme
+package com.example.presentationmodule.theme
 
 import androidx.compose.ui.graphics.Color
 

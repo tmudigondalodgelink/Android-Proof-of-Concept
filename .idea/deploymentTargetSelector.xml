@@ -13,10 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="domainmodule">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="datamodule">
+      <SelectionState runConfigName="presentationmodule">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

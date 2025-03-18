@@ -1,6 +1,5 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
