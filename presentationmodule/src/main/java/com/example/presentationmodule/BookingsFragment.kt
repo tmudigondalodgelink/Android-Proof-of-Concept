@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import dagger.hilt.android.AndroidEntryPoint
 
 class BookingsFragment: Fragment() {
     private val viewModel: BookingsViewModel by activityViewModels()

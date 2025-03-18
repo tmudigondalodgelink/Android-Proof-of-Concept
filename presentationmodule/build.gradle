@@ -30,14 +30,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        dataBinding true
-    }
-    dataBinding {
-        enabled = true
-    }
     viewBinding {
         enabled = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.1'
+    }
+    buildFeatures {
+        compose true
     }
 }
 
