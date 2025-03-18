@@ -1,4 +1,4 @@
-package com.example.architecturepoc2
+package com.example.presentationmodule
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -28,12 +28,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.architecturepoc2.ui.theme.ArchitecturePOC2Theme
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.architecturepoc2.View.NestedView3
-import com.example.architecturepoc2.View.PropertyDetailsView
+import com.example.presentationmodule.theme.ArchitecturePOC2Theme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
