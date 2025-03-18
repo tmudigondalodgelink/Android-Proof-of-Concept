@@ -14,7 +14,7 @@
         android:name=".MyApplication"
         tools:targetApi="34">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.presentationmodule.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ArchitecturePOC2">
             <intent-filter>
