@@ -1,12 +1,14 @@
 package com.example.domainmodule.usecases
 
-import android.util.Log
+import com.example.domainmodule.repositoryinterfaces.ITestRepository
 
 interface  ITestUseCase {
     fun printLog()
 }
 
-class TestUseCase: ITestUseCase {
+class TestUseCase(
+    private val testRepository: ITestRepository
+): ITestUseCase {
     override fun printLog() {
         println("Hello Dolly")
     }

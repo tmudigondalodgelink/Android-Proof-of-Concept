@@ -1,5 +1,7 @@
-package com.example.architecturepoc2
+package com.example.architecturepoc2.modules
 
+import com.example.datamodule.repositories.TestRepository
+import com.example.domainmodule.repositoryinterfaces.ITestRepository
 import com.example.domainmodule.usecases.ITestUseCase
 import com.example.domainmodule.usecases.TestUseCase
 import dagger.Module
@@ -12,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 object TestModule {
 
     @Provides
-    fun provideTestUseCase(): ITestUseCase {
-        return TestUseCase()
+    fun provideTestUseCase(testRepository: ITestRepository): ITestUseCase {
+        return TestUseCase(testRepository)
     }
 }
