@@ -3,7 +3,9 @@ package com.example.domainmodule.models
 import com.example.domainmodule.errors.AuthenticationError
 import com.example.domainmodule.errors.ExecutionError
 import com.example.domainmodule.errors.DataError.ParsingError
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class AuthenticationToken private constructor(
     val value: String
 ) {

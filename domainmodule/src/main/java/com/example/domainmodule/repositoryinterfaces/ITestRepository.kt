@@ -1,6 +1,6 @@
 package com.example.domainmodule.repositoryinterfaces
 
-import com.example.domainmodule.usecases.FlowResult
+import com.example.domainmodule.utilities.FlowResult
 import kotlinx.coroutines.flow.Flow
 
 interface ITestRepository {
