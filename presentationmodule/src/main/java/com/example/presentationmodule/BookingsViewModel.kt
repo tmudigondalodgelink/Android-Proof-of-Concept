@@ -1,11 +1,16 @@
 package com.example.presentationmodule
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domainmodule.usecases.FlowResult
 import com.example.domainmodule.usecases.ITestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,5 +24,22 @@ class BookingsViewModel @Inject constructor(
         testUseCase.printLog()
 
         _counter.value += 1
+
+        testUseCase.execute()
+            .collectInScope(viewModelScope) { result ->
+                when (result) {
+                    is FlowResult.Success -> println("Something happened ${result.value}")
+                    is FlowResult.Failure -> println("Error occurred: ${result.error}")
+                }
+
+                println("Current thread: ${Thread.currentThread().name}")
+            }
+    }
+}
+
+
+fun <T> Flow<T>.collectInScope(scope: CoroutineScope, collector: (T) -> Unit) {
+    scope.launch {
+        collect { collector(it) }
     }
 }
