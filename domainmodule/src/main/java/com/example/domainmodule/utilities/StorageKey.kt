@@ -1,5 +1,5 @@
 package com.example.domainmodule.utilities
 
-enum class StorageKey(val key: String) {
+enum class StorageKey(val value: String) {
     AUTH_TOKEN("AUTH_TOKEN")
 }

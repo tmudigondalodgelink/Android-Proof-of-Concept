@@ -2,8 +2,8 @@ package com.example.presentationmodule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domainmodule.usecases.FlowResult
 import com.example.domainmodule.usecases.ITestUseCase
+import com.example.domainmodule.utilities.FlowResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
