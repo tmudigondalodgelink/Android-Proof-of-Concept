@@ -40,6 +40,7 @@ import com.example.presentationmodule.NestedFragment4
 import com.example.presentationmodule.NestedView3
 import com.example.presentationmodule.PropertyDetailsView
 import com.example.presentationmodule.SearchFragment
+import com.example.presentationmodule.signin.SignInView
 import com.example.presentationmodule.theme.ArchitecturePOC2Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -157,7 +158,7 @@ class MainActivity : FragmentActivity() {
                                 }
                             }
                         }
-                        composable("myAccount") { MyAccountView(myAccountViewModel) }
+                        composable("myAccount") { SignInView() }//MyAccountView(myAccountViewModel) }
 
                         composable("propertyDetails") { PropertyDetailsView(navController = navController) }
 

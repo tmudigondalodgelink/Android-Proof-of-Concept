@@ -5,6 +5,8 @@ import com.example.domainmodule.errors.CredentialsParsingError
 import com.example.domainmodule.models.Authentication
 import com.example.domainmodule.models.AuthenticationToken
 import com.example.domainmodule.models.Email
+import com.example.domainmodule.models.ID
+import com.example.domainmodule.models.Name
 import com.example.domainmodule.models.Password
 import com.example.domainmodule.models.SignInResult
 import com.example.domainmodule.models.User
@@ -56,5 +58,24 @@ final class SignInUseCase(
     private fun store(signInResult: SignInResult) {
         authenticationRepository.setAuthentication(Authentication.Authenticated(signInResult.user))
         localStorageRepository.putObject(StorageKey.AUTH_TOKEN, signInResult.authenticationToken, AuthenticationToken.serializer())
+    }
+}
+
+class FakeSignInUseCase: ISignInUseCase {
+    override fun execute(
+        email: String?,
+        password: String?
+    ): Flow<FlowResult<User, AuthenticationError>> = flow {
+        val user = User(
+            id = ID.create("Some ID"),
+            email = Email.create("fake@email.com"),
+            firstName = Name.create("First"),
+            lastName = Name.create("Last"),
+            company = "Fake Company",
+            position = "Fake Position",
+            phoneNumber = "Fake Phone Number"
+        )
+
+        emit(FlowResult.Success(user))
     }
 }
