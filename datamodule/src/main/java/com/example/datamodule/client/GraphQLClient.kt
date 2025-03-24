@@ -7,20 +7,16 @@ import com.apollographql.apollo3.network.okHttpClient
 import com.example.datamodule.client.IGraphQLClient
 import com.example.domainmodule.errors.DataError
 import com.example.domainmodule.errors.ExecutionError
+import com.example.domainmodule.models.AuthenticationToken
 import okhttp3.OkHttpClient
 import okio.Buffer
 import java.util.concurrent.TimeUnit.SECONDS
 
-class GraphQLClient: IGraphQLClient {
+class GraphQLClient(
+    private val getAuthenticationToken: (() -> AuthenticationToken?)? = null
+): IGraphQLClient {
     private val PLATFORM_TYPE_HEADER = "platform-type"
     private val PLATFORM_TYPE_HEADER_VALUE = "Android"
-    var accountToken: String = ""
-        get() = field
-        set(value) {
-            field = value
-            okHttpClient = buildOkHttpClient(value)
-            apolloClient = buildApolloClient()
-        }
 
     var serverUrl = "https://test-api.lodgelink.com/graphql"
         get() = field
@@ -30,7 +26,6 @@ class GraphQLClient: IGraphQLClient {
         }
 
     fun reset() {
-        accountToken = ""
         serverUrl = "https://test-api.lodgelink.com/graphql"
     }
 
@@ -38,22 +33,25 @@ class GraphQLClient: IGraphQLClient {
 
     private var apolloClient = buildApolloClient()
 
-    private fun buildOkHttpClient(token: String = ""): OkHttpClient {
+    private fun buildOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .callTimeout(180L, SECONDS)
             .connectTimeout(180L, SECONDS)
             .readTimeout(180L, SECONDS)
             .writeTimeout(180L, SECONDS)
-        if (!token.isEmpty()) {
-            builder.addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader(PLATFORM_TYPE_HEADER, PLATFORM_TYPE_HEADER_VALUE)
-                    .addHeader("Authorization", "bearer $token")
-                    .build()
 
-                chain.proceed(request)
+            builder.addInterceptor { chain ->
+                getAuthenticationToken?.invoke()?.let { authToken ->
+                    val request = chain.request().newBuilder()
+                        .addHeader(PLATFORM_TYPE_HEADER, PLATFORM_TYPE_HEADER_VALUE)
+                        .addHeader("Authorization", "Bearer ${authToken.value}")
+                        .build()
+
+                    chain.proceed(request)
+                }
+
+                chain.proceed(chain.request())
             }
-        }
         return builder
             .addInterceptor { chain ->
                 val request = chain.request()
