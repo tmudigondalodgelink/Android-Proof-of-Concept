@@ -1,9 +1,8 @@
 package com.example.datamodule.repositories
 
 import com.example.domainmodule.repositoryinterfaces.ITestRepository
-import com.example.domainmodule.repositoryinterfaces.SomeError
 import com.example.domainmodule.repositoryinterfaces.SomeException
-import com.example.domainmodule.usecases.FlowResult
+import com.example.domainmodule.utilities.FlowResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

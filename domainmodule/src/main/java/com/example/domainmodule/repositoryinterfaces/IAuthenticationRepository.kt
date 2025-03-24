@@ -15,4 +15,5 @@ import java.util.Base64
 interface IAuthenticationRepository {
     fun signIn(email: Email,password: Password): Flow<FlowResult<SignInResult, DataError>>
     fun setAuthentication(authentication: Authentication)
+    fun getAuthentication(): Authentication
 }

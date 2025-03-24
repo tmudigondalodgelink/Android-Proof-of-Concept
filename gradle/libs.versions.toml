@@ -1,6 +1,7 @@
 [versions]
 activityComposeVersion = "1.6.0"
 agp = "8.5.2"
+apolloRuntime = "3.8.2"
 fragmentCompose = "1.8.6"
 fragmentKtxVersion = " 1.8.3"
 kotlin = "1.9.0"
@@ -33,6 +34,7 @@ androidx-fragment-compose = { module = "androidx.fragment:fragment-compose", ver
 androidx-fragment-ktx-v183 = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtxVersion" }
 androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "fragmentCompose" }
 androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apolloRuntime" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

@@ -13,7 +13,7 @@ data class AuthenticationToken private constructor(
         fun create(value: String?): AuthenticationToken {
             value?.takeIf { it.isNotBlank() }?.let {
                 return AuthenticationToken(it)
-            } ?: throw AuthenticationError.DataError(ParsingError(ExecutionError.WithMessage("Auth token is empty")))
+            } ?: throw ExecutionError.WithMessage("Auth token is empty")
 
         }
     }

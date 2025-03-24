@@ -1,0 +1,23 @@
+mutation login($emailAddress: EmailAddress!, $password: String!) {
+    login(emailAddress: $emailAddress, password: $password) {
+        errorMessage
+        message
+        accountToken
+        tokenExpiry
+        me {
+            userId
+            firstName
+            lastName
+            company
+            position
+            phoneNumber
+            emailAddress
+            activeOrganization {
+                id
+                roles
+                name
+                permissions
+            }
+        }
+    }
+}
