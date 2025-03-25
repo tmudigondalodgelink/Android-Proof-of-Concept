@@ -6,6 +6,7 @@ import com.example.datamodule.client.IGraphQLClient
 import com.example.datamodule.repositories.AuthenticationRepository
 import com.example.datamodule.repositories.LocalStorageRepository
 import com.example.datamodule.repositories.UserRepository
+import com.example.domainmodule.models.AuthenticationToken
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import com.example.domainmodule.repositoryinterfaces.IAuthenticationRepository
 import com.example.domainmodule.repositoryinterfaces.ILocalStorageRepository
 import com.example.domainmodule.repositoryinterfaces.IUserRepository
+import com.example.domainmodule.utilities.StorageKey
 import javax.inject.Singleton
 
 
@@ -21,8 +23,8 @@ import javax.inject.Singleton
 @Module
 class GraphQLModule {
     @Provides
-    fun providesGraphQLClient(): IGraphQLClient {
-        return GraphQLClient()
+    fun providesGraphQLClient(localStorage: ILocalStorageRepository): IGraphQLClient {
+        return GraphQLClient(getAuthenticationToken = { localStorage.getObject(StorageKey.AUTH_TOKEN, AuthenticationToken.serializer()) })
     }
 
     @Singleton

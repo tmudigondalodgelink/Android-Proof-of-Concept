@@ -4,6 +4,9 @@ import com.example.datamodule.repositories.AuthenticationRepository
 import com.example.datamodule.repositories.LocalStorageRepository
 import com.example.domainmodule.repositoryinterfaces.IAuthenticationRepository
 import com.example.domainmodule.repositoryinterfaces.ILocalStorageRepository
+import com.example.domainmodule.repositoryinterfaces.IUserRepository
+import com.example.domainmodule.usecases.GetMeUseCase
+import com.example.domainmodule.usecases.IGetMeUseCase
 import com.example.domainmodule.usecases.ISignInUseCase
 import com.example.domainmodule.usecases.SignInUseCase
 import dagger.Module
@@ -14,6 +17,14 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 @Module
 object UseCasesModule {
+
+    @Provides
+    fun provideGetMeUseCase(
+        userRepository: IUserRepository,
+    ): IGetMeUseCase {
+
+        return GetMeUseCase(userRepository)
+    }
 
     @Provides
     fun provideSignInUseCase(

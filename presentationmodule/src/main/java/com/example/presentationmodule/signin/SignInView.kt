@@ -42,8 +42,10 @@ fun SignInView(
             val password by viewModel.password.collectAsState()
 
             LaunchedEffect(viewModel.onSignInSuccess) {
-                if (viewModel.onSignInSuccess.value) {
-                    navigateOnSuccess()
+                viewModel.onSignInSuccess.collect {
+                    if (it) {
+                        navigateOnSuccess()
+                    }
                 }
             }
 

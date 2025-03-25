@@ -127,8 +127,6 @@ class MainActivity : FragmentActivity() {
                         }
                     }
                 ) { innerPadding ->
-                    val myAccountViewModel: MyAccountViewModel = hiltViewModel()
-
                     NavHost(
                         navController = navController,
                         startDestination = "signIn",
@@ -164,7 +162,7 @@ class MainActivity : FragmentActivity() {
                                 }
                             }
                         }
-                        composable("myAccount") { MyAccountView(myAccountViewModel) }
+                        composable("myAccount") { MyAccountView() }
 
                         composable("propertyDetails") { PropertyDetailsView(navController = navController) }
 

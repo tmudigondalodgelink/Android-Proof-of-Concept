@@ -1,18 +1,45 @@
 package com.example.presentationmodule
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domainmodule.models.User
+import com.example.domainmodule.usecases.GetMeUseCase
+import com.example.domainmodule.usecases.IGetMeUseCase
+import com.example.domainmodule.utilities.FlowResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-@HiltViewModel
-class MyAccountViewModel @Inject constructor() : ViewModel() {
-    private val _counter = MutableStateFlow(0)
-    val counter: StateFlow<Int> = _counter.asStateFlow()
+interface IMyAccountViewModel {
+    val counter: StateFlow<Int>
+    val user: StateFlow<User?>
+    fun increment()
+    fun getMe()
+}
 
-    fun increment() {
-        _counter.value++
+@HiltViewModel
+class MyAccountViewModel @Inject constructor(
+    private val getMeUseCase: IGetMeUseCase
+) : ViewModel(), IMyAccountViewModel {
+    override val counter = MutableStateFlow(0)
+    override val user = MutableStateFlow<User?>(null)
+
+    override fun increment() {
+        counter.value++
+    }
+
+    override fun getMe() {
+        getMeUseCase.execute()
+            .collectInScope(viewModelScope) { result ->
+                when (result) {
+                    is FlowResult.Success -> {
+                        user.value = result.value
+                        println("Got user details ${result.value}")
+                    }
+                    is FlowResult.Failure -> println("Error occurred: ${result.error}")
+                }
+            }
     }
 }
