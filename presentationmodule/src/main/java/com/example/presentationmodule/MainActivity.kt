@@ -31,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.presentationmodule.BookingsFragment
 import com.example.presentationmodule.MyAccountView
 import com.example.presentationmodule.MyAccountViewModel
@@ -78,47 +79,50 @@ class MainActivity : FragmentActivity() {
                 val navController = rememberNavController()
 
                 val searchFragmentState = rememberFragmentState()
-                val myAccountViewState = rememberFragmentState()
 
+                val noBottomNavScreens = setOf("signIn")
 
-                val context = LocalContext.current
+                val hideBottomNav = navController
+                    .currentBackStackEntryAsState().value?.destination?.route in noBottomNavScreens
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavigationBar {
-                            items.forEachIndexed { index, item ->
-                                NavigationBarItem(
-                                    selected = selectedItemIndex == index,
-                                    onClick = {
-                                        selectedItemIndex = index
-                                        when (index) {
-                                            0 -> navController.navigate("search") {
-                                                launchSingleTop = true
-                                                restoreState = true
-                                            }
+                        if (!hideBottomNav) {
+                            NavigationBar {
+                                items.forEachIndexed { index, item ->
+                                    NavigationBarItem(
+                                        selected = selectedItemIndex == index,
+                                        onClick = {
+                                            selectedItemIndex = index
+                                            when (index) {
+                                                0 -> navController.navigate("search") {
+                                                    launchSingleTop = true
+                                                    restoreState = true
+                                                }
 
-                                            1 -> navController.navigate("bookings") {
-                                                launchSingleTop = true
-                                                restoreState = true
-                                            }
+                                                1 -> navController.navigate("bookings") {
+                                                    launchSingleTop = true
+                                                    restoreState = true
+                                                }
 
-                                            2 -> navController.navigate("myAccount") {
-                                                launchSingleTop = true
-                                                restoreState = true
-                                            }
+                                                2 -> navController.navigate("myAccount") {
+                                                    launchSingleTop = true
+                                                    restoreState = true
+                                                }
 
-                                            else -> navController.navigate("search")
-                                        }
-                                    },
-                                    icon = {
-                                        Icon(
-                                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                            contentDescription = item.title
-                                        )
-                                    },
-                                    label = { Text(item.title) }
-                                )
+                                                else -> navController.navigate("search")
+                                            }
+                                        },
+                                        icon = {
+                                            Icon(
+                                                imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                                                contentDescription = item.title
+                                            )
+                                        },
+                                        label = { Text(item.title) }
+                                    )
+                                }
                             }
                         }
                     }
@@ -127,9 +131,11 @@ class MainActivity : FragmentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "search",
+                        startDestination = "signIn",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+                        composable("signIn") { SignInView(navigateOnSuccess = { navController.navigate("search") }) }
+
                         composable("search") {
                             AndroidFragment<SearchFragment>(
                                 modifier = Modifier.fillMaxSize(),
@@ -158,7 +164,7 @@ class MainActivity : FragmentActivity() {
                                 }
                             }
                         }
-                        composable("myAccount") { SignInView() }//MyAccountView(myAccountViewModel) }
+                        composable("myAccount") { MyAccountView(myAccountViewModel) }
 
                         composable("propertyDetails") { PropertyDetailsView(navController = navController) }
 
