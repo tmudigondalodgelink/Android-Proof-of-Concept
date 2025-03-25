@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.domainmodule.models.User
 import com.example.domainmodule.usecases.GetMeUseCase
 import com.example.domainmodule.usecases.IGetMeUseCase
+import com.example.domainmodule.usecases.ISignOutUseCase
+import com.example.domainmodule.usecases.SignOutUseCase
 import com.example.domainmodule.utilities.FlowResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,11 +19,13 @@ interface IMyAccountViewModel {
     val user: StateFlow<User?>
     fun increment()
     fun getMe()
+    fun signOut()
 }
 
 @HiltViewModel
 class MyAccountViewModel @Inject constructor(
-    private val getMeUseCase: IGetMeUseCase
+    private val getMeUseCase: IGetMeUseCase,
+    private val signOutUseCase: ISignOutUseCase
 ) : ViewModel(), IMyAccountViewModel {
     override val counter = MutableStateFlow(0)
     override val user = MutableStateFlow<User?>(null)
@@ -42,4 +46,7 @@ class MyAccountViewModel @Inject constructor(
                 }
             }
     }
+
+    override fun signOut() = signOutUseCase.execute()
+
 }

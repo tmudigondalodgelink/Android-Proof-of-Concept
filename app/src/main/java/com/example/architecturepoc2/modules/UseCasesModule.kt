@@ -8,7 +8,9 @@ import com.example.domainmodule.repositoryinterfaces.IUserRepository
 import com.example.domainmodule.usecases.GetMeUseCase
 import com.example.domainmodule.usecases.IGetMeUseCase
 import com.example.domainmodule.usecases.ISignInUseCase
+import com.example.domainmodule.usecases.ISignOutUseCase
 import com.example.domainmodule.usecases.SignInUseCase
+import com.example.domainmodule.usecases.SignOutUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +35,14 @@ object UseCasesModule {
     ): ISignInUseCase {
 
         return SignInUseCase(authenticationRepository, localStorageRepository)
+    }
+
+    @Provides
+    fun provideSignOutUseCase(
+        authenticationRepository: IAuthenticationRepository,
+        localStorageRepository: ILocalStorageRepository
+    ): ISignOutUseCase {
+
+        return SignOutUseCase(authenticationRepository, localStorageRepository)
     }
 }

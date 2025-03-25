@@ -58,7 +58,7 @@ fun MyAccountView(viewModel: IMyAccountViewModel = hiltViewModel<MyAccountViewMo
                 Text(text = "Email: ${it.email.value}", fontSize = 18.sp)
             }
 
-            Button(onClick = {  }) {
+            Button(onClick = { viewModel.signOut() }) {
                 Text(text = "Sign out")
             }
         }

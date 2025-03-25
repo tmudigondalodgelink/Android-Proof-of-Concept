@@ -47,10 +47,10 @@ class GraphQLClient(
                         .addHeader("Authorization", "Bearer ${authToken.value}")
                         .build()
 
-                    chain.proceed(request)
+                    return@addInterceptor chain.proceed(request)
                 }
 
-                chain.proceed(chain.request())
+                return@addInterceptor chain.proceed(chain.request())
             }
         return builder
             .addInterceptor { chain ->
