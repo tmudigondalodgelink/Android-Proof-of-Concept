@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 class GraphQLClient(
     private val getAuthenticationToken: (() -> AuthenticationToken?)? = null
-): IGraphQLClient {
+) : IGraphQLClient {
     private val PLATFORM_TYPE_HEADER = "platform-type"
     private val PLATFORM_TYPE_HEADER_VALUE = "Android"
 
@@ -40,18 +40,18 @@ class GraphQLClient(
             .readTimeout(180L, SECONDS)
             .writeTimeout(180L, SECONDS)
 
-            builder.addInterceptor { chain ->
-                getAuthenticationToken?.invoke()?.let { authToken ->
-                    val request = chain.request().newBuilder()
-                        .addHeader(PLATFORM_TYPE_HEADER, PLATFORM_TYPE_HEADER_VALUE)
-                        .addHeader("Authorization", "Bearer ${authToken.value}")
-                        .build()
+        builder.addInterceptor { chain ->
+            getAuthenticationToken?.invoke()?.let { authToken ->
+                val request = chain.request().newBuilder()
+                    .addHeader(PLATFORM_TYPE_HEADER, PLATFORM_TYPE_HEADER_VALUE)
+                    .addHeader("Authorization", "Bearer ${authToken.value}")
+                    .build()
 
-                    return@addInterceptor chain.proceed(request)
-                }
-
-                return@addInterceptor chain.proceed(chain.request())
+                return@addInterceptor chain.proceed(request)
             }
+
+            return@addInterceptor chain.proceed(chain.request())
+        }
         return builder
             .addInterceptor { chain ->
                 val request = chain.request()
@@ -72,6 +72,7 @@ class GraphQLClient(
             }
             .build()
     }
+
     private fun buildApolloClient(): ApolloClient {
         return ApolloClient.Builder()
             .serverUrl(serverUrl)

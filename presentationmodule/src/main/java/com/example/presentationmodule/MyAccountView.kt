@@ -1,6 +1,8 @@
 package com.example.presentationmodule
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceBetween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +43,11 @@ fun MyAccountView(viewModel: IMyAccountViewModel = hiltViewModel<MyAccountViewMo
             }
         }
 
-        Column{
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 text = "My Account",
                 fontSize = 24.sp,
@@ -58,7 +64,10 @@ fun MyAccountView(viewModel: IMyAccountViewModel = hiltViewModel<MyAccountViewMo
                 Text(text = "Email: ${it.email.value}", fontSize = 18.sp)
             }
 
-            Button(onClick = { viewModel.signOut() }) {
+            Button(
+                onClick = { viewModel.signOut() },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
                 Text(text = "Sign out")
             }
         }
