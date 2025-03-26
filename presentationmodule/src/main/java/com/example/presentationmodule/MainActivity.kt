@@ -52,7 +52,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
-
     @Inject
     lateinit var authenticatedUseCase: IUserAuthenticatedUseCase
 
@@ -91,17 +90,3 @@ fun MainScreen() {
         NavGraph(navController = navController, innerPadding = innerPadding)
     }
 }
-
-
-
-data class BottomNavigationItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector
-) {
-    val route: String
-        get() {
-            return title.lowercase()
-        }
-}
-

@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController as NavController1
 
 @Composable
@@ -48,3 +49,15 @@ fun BottomNavSetup(navigateTo: (String) -> Unit) {
         }
     }
 }
+
+data class BottomNavigationItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
+) {
+    val route: String
+        get() {
+            return title.lowercase()
+        }
+}
+
