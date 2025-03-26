@@ -1,5 +1,6 @@
 package com.example.presentationmodule
 
+import NavGraph
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +18,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
@@ -32,6 +34,8 @@ import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.domainmodule.usecases.IUserAuthenticatedUseCase
+import com.example.domainmodule.usecases.UserAuthenticatedUseCase
 import com.example.presentationmodule.BookingsFragment
 import com.example.presentationmodule.MyAccountView
 import com.example.presentationmodule.MyAccountViewModel
@@ -44,162 +48,60 @@ import com.example.presentationmodule.SearchFragment
 import com.example.presentationmodule.signin.SignInView
 import com.example.presentationmodule.theme.ArchitecturePOC2Theme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
+
+    @Inject
+    lateinit var authenticatedUseCase: IUserAuthenticatedUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ArchitecturePOC2Theme {
-                val items = listOf(
-                    BottomNavigationItem(
-                        title = "Search",
-                        selectedIcon = Icons.Filled.Search,
-                        unselectedIcon = Icons.Outlined.Search,
-                    ),
-                    BottomNavigationItem(
-                        title = "Bookings",
-                        selectedIcon = Icons.Filled.Email,
-                        unselectedIcon = Icons.Outlined.Email
-                    ),
-                    BottomNavigationItem(
-                        title = "MyAccount",
-                        selectedIcon = Icons.Filled.Settings,
-                        unselectedIcon = Icons.Outlined.Settings
-                    )
-
-                )
-
-                var selectedItemIndex by rememberSaveable {
-                    mutableIntStateOf(0)
-                }
-
-                val navController = rememberNavController()
-
-                val searchFragmentState = rememberFragmentState()
-
-                val noBottomNavScreens = setOf("signIn")
-
-                val hideBottomNav = navController
-                    .currentBackStackEntryAsState().value?.destination?.route in noBottomNavScreens
-
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        if (!hideBottomNav) {
-                            NavigationBar {
-                                items.forEachIndexed { index, item ->
-                                    NavigationBarItem(
-                                        selected = selectedItemIndex == index,
-                                        onClick = {
-                                            selectedItemIndex = index
-                                            when (index) {
-                                                0 -> navController.navigate("search") {
-                                                    launchSingleTop = true
-                                                    restoreState = true
-                                                }
-
-                                                1 -> navController.navigate("bookings") {
-                                                    launchSingleTop = true
-                                                    restoreState = true
-                                                }
-
-                                                2 -> navController.navigate("myAccount") {
-                                                    launchSingleTop = true
-                                                    restoreState = true
-                                                }
-
-                                                else -> navController.navigate("search")
-                                            }
-                                        },
-                                        icon = {
-                                            Icon(
-                                                imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                                contentDescription = item.title
-                                            )
-                                        },
-                                        label = { Text(item.title) }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                ) { innerPadding ->
-                    NavHost(
-                        navController = navController,
-                        startDestination = "signIn",
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable("signIn") { SignInView(navigateOnSuccess = { navController.navigate("search") }) }
-
-                        composable("search") {
-                            AndroidFragment<SearchFragment>(
-                                modifier = Modifier.fillMaxSize(),
-                                fragmentState = searchFragmentState
-                            ) {
-                                it.navigateToNestedFragment1 = {
-                                    navController.navigate("nestedFragment1") {
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            }
-                        }
-
-                        composable("bookings") {
-                            val bookingFragmentState = rememberFragmentState()
-                            AndroidFragment<BookingsFragment>(
-                                modifier = Modifier.fillMaxSize(),
-                                fragmentState = bookingFragmentState,
-                            ) {
-                                it.navigateToPropertyDetails = {
-                                    navController.navigate("propertyDetails") {
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            }
-                        }
-                        composable("myAccount") { MyAccountView() }
-
-                        composable("propertyDetails") { PropertyDetailsView(navController = navController) }
-
-                        composable("nestedFragment1") {
-                            AndroidFragment<NestedFragment1>(
-                                modifier = Modifier.fillMaxSize(),
-                            ) {
-                                it.navigateToNestedFragment2 = {
-                                    navController.navigate("nestedFragment2") {
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            } }
-
-                        composable("nestedFragment2") {
-                            AndroidFragment<NestedFragment2>(
-                                modifier = Modifier.fillMaxSize(),
-                            ) }
-
-                        composable("nestedView3") { NestedView3(navController = navController) }
-
-                        composable("nestedFragment4") {
-                            AndroidFragment<NestedFragment4>(
-                                modifier = Modifier.fillMaxSize(),
-                            ) }
-                    }
-                }
+                MainScreen()
             }
         }
     }
 }
+
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+
+    val noBottomNavScreens = setOf("signIn")
+    val hideBottomNav = navController
+        .currentBackStackEntryAsState().value?.destination?.route in noBottomNavScreens
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            if (!hideBottomNav) {
+                BottomNavSetup(navigateTo = { route ->
+                    navController.navigate(route) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                })
+            }
+        }
+    ) { innerPadding ->
+        NavGraph(navController = navController, innerPadding = innerPadding)
+    }
+}
+
 
 
 data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
-)
+) {
+    val route: String
+        get() {
+            return title.lowercase()
+        }
+}
 

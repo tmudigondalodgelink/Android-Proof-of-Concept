@@ -9,8 +9,10 @@ import com.example.domainmodule.usecases.GetMeUseCase
 import com.example.domainmodule.usecases.IGetMeUseCase
 import com.example.domainmodule.usecases.ISignInUseCase
 import com.example.domainmodule.usecases.ISignOutUseCase
+import com.example.domainmodule.usecases.IUserAuthenticatedUseCase
 import com.example.domainmodule.usecases.SignInUseCase
 import com.example.domainmodule.usecases.SignOutUseCase
+import com.example.domainmodule.usecases.UserAuthenticatedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +46,13 @@ object UseCasesModule {
     ): ISignOutUseCase {
 
         return SignOutUseCase(authenticationRepository, localStorageRepository)
+    }
+
+    @Provides
+    fun provideUserAuthenticatedUseCase(
+        authenticationRepository: IAuthenticationRepository
+    ): IUserAuthenticatedUseCase {
+
+        return UserAuthenticatedUseCase(authenticationRepository)
     }
 }

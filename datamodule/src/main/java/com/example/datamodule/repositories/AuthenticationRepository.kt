@@ -14,6 +14,8 @@ import com.example.domainmodule.models.User
 import com.example.domainmodule.repositoryinterfaces.IAuthenticationRepository
 import com.example.domainmodule.utilities.FlowResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class AuthenticationRepository @Inject constructor(
     private val graphQLClient: IGraphQLClient
 ) : IAuthenticationRepository{
-    private var authentication: Authentication = Authentication.Unauthenticated
+
+    override val authentication = MutableStateFlow<Authentication>(Authentication.Unauthenticated)
 
     override fun signIn(
         email: Email,
@@ -52,11 +55,13 @@ class AuthenticationRepository @Inject constructor(
 
     @Synchronized
     override fun setAuthentication(authentication: Authentication) {
-        this.authentication = authentication
+        this.authentication.value = authentication
     }
 
     @Synchronized
     override fun getAuthentication(): Authentication {
-        return authentication
+        return authentication.value
     }
+
+    override fun observeAuthentication(): StateFlow<Authentication> = authentication
 }
