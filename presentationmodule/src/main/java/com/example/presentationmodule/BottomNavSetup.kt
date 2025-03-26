@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.domainmodule.usecases.IUserAuthenticatedUseCase
 import androidx.navigation.NavController as NavController1
 
 @Composable

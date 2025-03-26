@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
 @Composable
-fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel(), navController: NavController) {
+fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel(), navigateToNestedFragment4: () -> Unit) {
     val counter by viewModel.counter.collectAsState()
 
     Box(
@@ -41,7 +41,7 @@ fun NestedView3(viewModel: NestedView3ViewModel = hiltViewModel(), navController
                 Text(text = "Increase")
             }
 
-            Button(onClick = { navController.navigate("nestedFragment4") }) {
+            Button(onClick = { navigateToNestedFragment4() }) {
                 Text(text = "Navigate to Nested Fragment 4")
             }
         }

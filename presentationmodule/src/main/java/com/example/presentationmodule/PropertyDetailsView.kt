@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
 @Composable
-fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), navController: NavController) {
+fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), navigateToNestedView3: () -> Unit) {
     val counter by viewModel.counter.collectAsState()
 
     Box(
@@ -41,7 +41,7 @@ fun PropertyDetailsView(viewModel: PropertyDetailsViewModel = hiltViewModel(), n
                 Text(text = "Increase")
             }
 
-            Button(onClick = { navController.navigate("nestedView3") }) {
+            Button(onClick = { navigateToNestedView3() }) {
                 Text(text = "Navigate to Nested View 3")
             }
         }

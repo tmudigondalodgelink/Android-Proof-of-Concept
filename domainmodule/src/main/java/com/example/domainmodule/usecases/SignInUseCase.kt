@@ -28,7 +28,7 @@ interface ISignInUseCase {
     ): Flow<FlowResult<User, AuthenticationError>>
 }
 
-final class SignInUseCase(
+class SignInUseCase(
     private val authenticationRepository: IAuthenticationRepository,
     private val localStorageRepository: ILocalStorageRepository
 ): ISignInUseCase {

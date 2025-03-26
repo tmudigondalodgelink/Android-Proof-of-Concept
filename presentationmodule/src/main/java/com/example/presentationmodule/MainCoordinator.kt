@@ -19,12 +19,12 @@ import com.example.presentationmodule.SearchFragment
 import com.example.presentationmodule.signin.SignInView
 
 @Composable
-fun NavGraph(navController: NavHostController, innerPadding: PaddingValues) {
+fun MainCoordinator(navController: NavHostController, innerPadding: PaddingValues) {
     val searchFragmentState = rememberFragmentState()
 
     NavHost(
         navController = navController,
-        startDestination = "search",
+        startDestination = "signIn",
         modifier = Modifier.padding(innerPadding)
     ) {
         composable("signIn") { SignInView(navigateOnSuccess = { navController.navigate("search") }) }
@@ -59,7 +59,12 @@ fun NavGraph(navController: NavHostController, innerPadding: PaddingValues) {
         }
         composable("myAccount") { MyAccountView() }
 
-        composable("propertyDetails") { PropertyDetailsView(navController = navController) }
+        composable("propertyDetails") { PropertyDetailsView(navigateToNestedView3 = {
+            navController.navigate("nestedView3") {
+                launchSingleTop = true
+                restoreState = true
+            }
+        }) }
 
         composable("nestedFragment1") {
             AndroidFragment<NestedFragment1>(
@@ -78,7 +83,12 @@ fun NavGraph(navController: NavHostController, innerPadding: PaddingValues) {
                 modifier = Modifier.fillMaxSize(),
             ) }
 
-        composable("nestedView3") { NestedView3(navController = navController) }
+        composable("nestedView3") { NestedView3(navigateToNestedFragment4 = {
+            navController.navigate("nestedFragment4") {
+                launchSingleTop = true
+                restoreState = true
+            }
+        }) }
 
         composable("nestedFragment4") {
             AndroidFragment<NestedFragment4>(
