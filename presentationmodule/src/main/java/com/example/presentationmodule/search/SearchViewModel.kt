@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

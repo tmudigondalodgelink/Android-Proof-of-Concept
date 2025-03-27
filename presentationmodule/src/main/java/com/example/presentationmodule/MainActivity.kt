@@ -33,23 +33,3 @@ class MainActivity : FragmentActivity() {
         }
     }
 }
-
-@Composable
-fun MainScreen(
-    navController: NavController,
-    navigatorView: @Composable (PaddingValues) -> Unit 
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            BottomNavSetup(
-                navigateTo = { route -> navController.navigate(route) {
-                    launchSingleTop = true
-                    restoreState = true
-                }
-                })
-        }
-    ) { innerPadding ->
-        navigatorView(innerPadding)
-    }
-}

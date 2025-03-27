@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.bookings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

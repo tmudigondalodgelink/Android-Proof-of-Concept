@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.nestedfragment2
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.example.presentationmodule.databinding.FragmentNestedFragment2Binding
 class NestedFragment2 : Fragment() {
     private var _binding: FragmentNestedFragment2Binding? = null
     private val binding get() = _binding!!
-    private val viewModel: NestedFragment1ViewModel by viewModels()
+    private val viewModel: NestedFragment2ViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

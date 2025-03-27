@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.nestedfragment1
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -6,19 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.presentationmodule.databinding.FragmentNestedFragment4Binding
+import com.example.presentationmodule.databinding.FragmentNestedFragment1Binding
 
-class NestedFragment4 : Fragment() {
-    private var _binding: FragmentNestedFragment4Binding? = null
+class NestedFragment1 : Fragment() {
+    private var _binding: FragmentNestedFragment1Binding? = null
     private val binding get() = _binding!!
-    private val viewModel: NestedFragment4ViewModel by viewModels()
+    private val viewModel: NestedFragment1ViewModel by viewModels()
+    var navigateToNestedFragment2: () -> Unit = {}
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNestedFragment4Binding.inflate(inflater, container, false)
+        _binding = FragmentNestedFragment1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,6 +38,10 @@ class NestedFragment4 : Fragment() {
         binding.apply {
             counterButton.setOnClickListener {
                 viewModel.increaseCount()
+            }
+
+            navigateButton.setOnClickListener {
+                navigateToNestedFragment2()
             }
         }
     }

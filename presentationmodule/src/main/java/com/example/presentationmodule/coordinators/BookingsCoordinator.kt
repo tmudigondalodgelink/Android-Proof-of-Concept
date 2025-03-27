@@ -8,10 +8,10 @@ import androidx.fragment.compose.rememberFragmentState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.presentationmodule.BookingsFragment
-import com.example.presentationmodule.NestedFragment4
-import com.example.presentationmodule.NestedView3
-import com.example.presentationmodule.PropertyDetailsView
+import com.example.presentationmodule.bookings.BookingsFragment
+import com.example.presentationmodule.nestedfragment4.NestedFragment4
+import com.example.presentationmodule.nestedview3.NestedView3
+import com.example.presentationmodule.propertydetails.PropertyDetailsView
 
 @Composable
 fun BookingsCoordinator() {

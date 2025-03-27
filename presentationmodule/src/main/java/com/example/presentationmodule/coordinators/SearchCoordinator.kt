@@ -8,9 +8,9 @@ import androidx.fragment.compose.rememberFragmentState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.presentationmodule.NestedFragment1
-import com.example.presentationmodule.NestedFragment2
-import com.example.presentationmodule.SearchFragment
+import com.example.presentationmodule.nestedfragment1.NestedFragment1
+import com.example.presentationmodule.nestedfragment2.NestedFragment2
+import com.example.presentationmodule.search.SearchFragment
 
 @Composable
 fun SearchCoordinator() {

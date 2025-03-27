@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domainmodule.usecases.FakeSignInUseCase
 import com.example.domainmodule.usecases.ISignInUseCase
 import com.example.domainmodule.utilities.FlowResult
-import com.example.presentationmodule.collectInScope
+import com.example.presentationmodule.bookings.collectInScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

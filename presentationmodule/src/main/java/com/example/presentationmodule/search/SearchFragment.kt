@@ -1,25 +1,26 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.search
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.example.presentationmodule.databinding.FragmentNestedFragment1Binding
+import androidx.fragment.app.activityViewModels
+import com.example.presentationmodule.databinding.FragmentSearchBinding
 
-class NestedFragment1 : Fragment() {
-    private var _binding: FragmentNestedFragment1Binding? = null
+class SearchFragment : Fragment() {
+
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NestedFragment1ViewModel by viewModels()
-    var navigateToNestedFragment2: () -> Unit = {}
+    private val viewModel: SearchViewModel by activityViewModels()
+    var navigateToNestedFragment1: () -> Unit = {}
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNestedFragment1Binding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,7 +42,7 @@ class NestedFragment1 : Fragment() {
             }
 
             navigateButton.setOnClickListener {
-                navigateToNestedFragment2()
+                navigateToNestedFragment1()
             }
         }
     }

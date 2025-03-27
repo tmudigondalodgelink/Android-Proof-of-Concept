@@ -1,18 +1,16 @@
-package com.example.presentationmodule
+package com.example.presentationmodule.myaccount
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domainmodule.models.User
-import com.example.domainmodule.usecases.GetMeUseCase
 import com.example.domainmodule.usecases.IGetMeUseCase
 import com.example.domainmodule.usecases.ISignOutUseCase
-import com.example.domainmodule.usecases.SignOutUseCase
 import com.example.domainmodule.utilities.FlowResult
+import com.example.presentationmodule.bookings.collectInScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 interface IMyAccountViewModel {
     val counter: StateFlow<Int>
