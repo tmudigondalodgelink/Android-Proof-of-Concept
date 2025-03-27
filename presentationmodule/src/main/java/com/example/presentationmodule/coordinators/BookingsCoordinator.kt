@@ -19,17 +19,17 @@ fun BookingsCoordinator() {
 
     NavHost(
         navController = bookingsNavController,
-        startDestination = "bookings"
+        startDestination = BookingsCoordinatorRoutes.BOOKINGS.value
     ) {
 
-        composable("bookings") {
+        composable(BookingsCoordinatorRoutes.BOOKINGS.value) {
             val bookingFragmentState = rememberFragmentState()
             AndroidFragment<BookingsFragment>(
                 modifier = Modifier.fillMaxSize(),
                 fragmentState = bookingFragmentState,
             ) {
                 it.navigateToPropertyDetails = {
-                    bookingsNavController.navigate("propertyDetails") {
+                    bookingsNavController.navigate(BookingsCoordinatorRoutes.PROPERTY_DETAILS.value) {
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -37,24 +37,31 @@ fun BookingsCoordinator() {
             }
         }
 
-        composable("propertyDetails") { PropertyDetailsView(navigateToNestedView3 = {
-            bookingsNavController.navigate("nestedView3") {
+        composable(BookingsCoordinatorRoutes.PROPERTY_DETAILS.value) { PropertyDetailsView(navigateToNestedView3 = {
+            bookingsNavController.navigate(BookingsCoordinatorRoutes.NESTED_VIEW_3.value) {
                 launchSingleTop = true
                 restoreState = true
             }
         }) }
 
 
-        composable("nestedView3") { NestedView3(navigateToNestedFragment4 = {
-            bookingsNavController.navigate("nestedFragment4") {
+        composable(BookingsCoordinatorRoutes.NESTED_VIEW_3.value) { NestedView3(navigateToNestedFragment4 = {
+            bookingsNavController.navigate(BookingsCoordinatorRoutes.NESTED_FRAGMENT_4.value) {
                 launchSingleTop = true
                 restoreState = true
             }
         }) }
 
-        composable("nestedFragment4") {
+        composable(BookingsCoordinatorRoutes.NESTED_FRAGMENT_4.value) {
             AndroidFragment<NestedFragment4>(
                 modifier = Modifier.fillMaxSize(),
             ) }
     }
+}
+
+enum class BookingsCoordinatorRoutes(val value: String) {
+    BOOKINGS("bookings"),
+    PROPERTY_DETAILS("propertyDetails"),
+    NESTED_VIEW_3("nestedView3"),
+    NESTED_FRAGMENT_4("nestedFragment4")
 }

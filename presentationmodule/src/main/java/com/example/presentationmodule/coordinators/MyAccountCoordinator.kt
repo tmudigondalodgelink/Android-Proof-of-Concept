@@ -12,8 +12,12 @@ fun MyAccountCoordinator() {
 
     NavHost(
         navController = myAccountNavController,
-        startDestination = "myAccount"
+        startDestination = MyAccountCoordinatorRoutes.MY_ACCOUNT.value
     ) {
-        composable("myAccount") { MyAccountView() }
+        composable(MyAccountCoordinatorRoutes.MY_ACCOUNT.value) { MyAccountView() }
     }
+}
+
+enum class MyAccountCoordinatorRoutes(val value: String) {
+    MY_ACCOUNT("myAccount")
 }

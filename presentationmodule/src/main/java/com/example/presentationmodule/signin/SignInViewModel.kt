@@ -19,6 +19,7 @@ interface ISignInViewModel {
     fun setEmail(email: String)
     fun setPassword(password: String)
     fun singIn()
+    fun resetState()
 }
 
 @HiltViewModel
@@ -48,6 +49,12 @@ class SignInViewModel @Inject constructor(
                     is FlowResult.Failure -> println("Error occurred: ${result.error}")
                 }
             }
+    }
+
+    override fun resetState() {
+        email.value = ""
+        password.value = ""
+        onSignInSuccess.value = false
     }
 
     companion object {

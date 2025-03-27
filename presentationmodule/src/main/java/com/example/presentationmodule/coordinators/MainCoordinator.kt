@@ -15,12 +15,18 @@ fun MainCoordinator() {
     MainScreen(navController = navController, navigatorView = { paddings ->
         NavHost(
             navController = navController,
-            startDestination = "searchCoordinator",
+            startDestination = MainCoordinatorRoutes.SEARCH_COORDINATOR.value,
             modifier = Modifier.padding(paddings)
         ) {
-            composable("searchCoordinator") { SearchCoordinator() }
-            composable("bookingsCoordinator") { BookingsCoordinator() }
-            composable("myAccountCoordinator") { MyAccountCoordinator() }
+            composable(MainCoordinatorRoutes.SEARCH_COORDINATOR.value) { SearchCoordinator() }
+            composable(MainCoordinatorRoutes.BOOKINGS_COORDINATOR.value) { BookingsCoordinator() }
+            composable(MainCoordinatorRoutes.MY_ACCOUNT_COORDINATOR.value) { MyAccountCoordinator() }
         }
     })
+}
+
+enum class MainCoordinatorRoutes(val value: String) {
+    SEARCH_COORDINATOR("searchCoordinator"),
+    BOOKINGS_COORDINATOR("bookingsCoordinator"),
+    MY_ACCOUNT_COORDINATOR("myAccountCoordinator")
 }

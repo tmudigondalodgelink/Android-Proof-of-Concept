@@ -14,19 +14,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.domainmodule.usecases.IUserAuthenticatedUseCase
-import androidx.navigation.NavController as NavController1
+import com.example.presentationmodule.coordinators.MainCoordinatorRoutes
 
 @Composable
 fun BottomNavSetup(navigateTo: (String) -> Unit) {
     val items = listOf(
-        BottomNavigationItem("Search", Icons.Filled.Search, Icons.Outlined.Search),
-        BottomNavigationItem("Bookings", Icons.Filled.Email, Icons.Outlined.Email),
-        BottomNavigationItem("MyAccount", Icons.Filled.Settings, Icons.Outlined.Settings)
+        BottomNavigationItem("Search", Icons.Filled.Search, Icons.Outlined.Search, MainCoordinatorRoutes.SEARCH_COORDINATOR),
+        BottomNavigationItem("Bookings", Icons.Filled.Email, Icons.Outlined.Email, MainCoordinatorRoutes.BOOKINGS_COORDINATOR),
+        BottomNavigationItem("MyAccount", Icons.Filled.Settings, Icons.Outlined.Settings, MainCoordinatorRoutes.MY_ACCOUNT_COORDINATOR)
     )
 
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -37,7 +35,7 @@ fun BottomNavSetup(navigateTo: (String) -> Unit) {
                 selected = selectedItemIndex == index,
                 onClick = {
                     selectedItemIndex = index
-                    navigateTo(item.route)
+                    navigateTo(item.route.value)
                 },
                 icon = {
                     Icon(
@@ -54,11 +52,7 @@ fun BottomNavSetup(navigateTo: (String) -> Unit) {
 data class BottomNavigationItem(
     val title: String,
     val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector
-) {
-    val route: String
-        get() {
-            return title.lowercase() + "coordinator"
-        }
-}
+    val unselectedIcon: ImageVector,
+    val route: MainCoordinatorRoutes
+)
 

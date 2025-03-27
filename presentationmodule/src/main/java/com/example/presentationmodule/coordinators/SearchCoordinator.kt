@@ -18,9 +18,9 @@ fun SearchCoordinator() {
 
     NavHost(
         navController = searchNavController,
-        startDestination = "search"
+        startDestination = SearchCoordinatorRoutes.SEARCH.value
     ) {
-        composable("search") {
+        composable(SearchCoordinatorRoutes.SEARCH.value) {
             val searchFragmentState = rememberFragmentState()
             AndroidFragment<SearchFragment>(
                 modifier = Modifier.fillMaxSize(),
@@ -35,7 +35,7 @@ fun SearchCoordinator() {
             }
         }
 
-        composable("nestedFragment1") {
+        composable(SearchCoordinatorRoutes.NESTED_FRAGMENT_1.value) {
             AndroidFragment<NestedFragment1>(
                 modifier = Modifier.fillMaxSize(),
             ) {
@@ -48,7 +48,7 @@ fun SearchCoordinator() {
             }
         }
 
-        composable("nestedFragment2") {
+        composable(SearchCoordinatorRoutes.NESTED_FRAGMENT_2.value) {
             AndroidFragment<NestedFragment2>(
                 modifier = Modifier.fillMaxSize(),
             )
@@ -56,5 +56,9 @@ fun SearchCoordinator() {
     }
 }
 
-enum class SearchCoordinatorRoutes {}
+enum class SearchCoordinatorRoutes(val value: String) {
+    SEARCH("search"),
+    NESTED_FRAGMENT_1("nestedFragment1"),
+    NESTED_FRAGMENT_2("nestedFragment2")
+}
 
