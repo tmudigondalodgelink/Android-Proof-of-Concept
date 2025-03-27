@@ -41,6 +41,8 @@ class SignInUseCase(
             val emailModel = Email.create(email)
             val passwordModel = Password.create(password)
 
+            localStorageRepository.removeObject(StorageKey.AUTH_TOKEN)
+
             val signInResult = authenticationRepository.signIn(emailModel, passwordModel).first()
 
             when (signInResult) {
