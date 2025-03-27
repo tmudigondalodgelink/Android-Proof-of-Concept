@@ -24,7 +24,10 @@ import javax.inject.Singleton
 class GraphQLModule {
     @Provides
     fun providesGraphQLClient(localStorage: ILocalStorageRepository): IGraphQLClient {
-        return GraphQLClient(getAuthenticationToken = { localStorage.getObject(StorageKey.AUTH_TOKEN, AuthenticationToken.serializer()) })
+        return GraphQLClient(
+            getAuthenticationToken = {
+            runCatching { localStorage.getObject(StorageKey.AUTH_TOKEN, AuthenticationToken.serializer()) }.getOrNull()
+        })
     }
 
     @Singleton

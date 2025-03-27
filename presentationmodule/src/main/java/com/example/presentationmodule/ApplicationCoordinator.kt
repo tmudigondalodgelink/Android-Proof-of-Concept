@@ -24,10 +24,10 @@ fun MainCoordinator(navController: NavHostController, innerPadding: PaddingValue
 
     NavHost(
         navController = navController,
-        startDestination = "signIn",
+        startDestination = "search",
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable("signIn") { SignInView(navigateOnSuccess = { navController.navigate("search") }) }
+        composable("signIn") { SignInView() }
 
         composable("search") {
             AndroidFragment<SearchFragment>(
