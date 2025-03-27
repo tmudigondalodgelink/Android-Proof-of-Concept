@@ -58,7 +58,7 @@ data class BottomNavigationItem(
 ) {
     val route: String
         get() {
-            return title.lowercase()
+            return title.lowercase() + "coordinator"
         }
 }
 

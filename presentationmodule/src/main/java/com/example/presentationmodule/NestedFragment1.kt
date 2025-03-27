@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.presentationmodule.databinding.FragmentNested1Binding
+import com.example.presentationmodule.databinding.FragmentNestedFragment1Binding
 
 class NestedFragment1 : Fragment() {
-    private var _binding: FragmentNested1Binding? = null
+    private var _binding: FragmentNestedFragment1Binding? = null
     private val binding get() = _binding!!
-    private val viewModel: NestedFragment2ViewModel by viewModels()
+    private val viewModel: NestedFragment1ViewModel by viewModels()
     var navigateToNestedFragment2: () -> Unit = {}
 
 
@@ -19,7 +19,7 @@ class NestedFragment1 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNested1Binding.inflate(inflater, container, false)
+        _binding = FragmentNestedFragment1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
