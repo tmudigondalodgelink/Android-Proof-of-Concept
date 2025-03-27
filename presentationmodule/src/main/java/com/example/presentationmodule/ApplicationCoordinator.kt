@@ -19,7 +19,7 @@ import com.example.presentationmodule.SearchFragment
 import com.example.presentationmodule.signin.SignInView
 
 @Composable
-fun MainCoordinator(navController: NavHostController, innerPadding: PaddingValues) {
+fun ApplicationCoordinator(navController: NavHostController, innerPadding: PaddingValues) {
     val searchFragmentState = rememberFragmentState()
 
     NavHost(

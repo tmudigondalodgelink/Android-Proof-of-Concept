@@ -25,9 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun SignInView(
-    viewModel: ISignInViewModel = hiltViewModel<SignInViewModel>(),
-    navigateOnSuccess: () -> Unit
-) {
+    viewModel: ISignInViewModel = hiltViewModel<SignInViewModel>()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,14 +38,6 @@ fun SignInView(
         ) {
             val email by viewModel.email.collectAsState()
             val password by viewModel.password.collectAsState()
-
-            LaunchedEffect(viewModel.onSignInSuccess) {
-                viewModel.onSignInSuccess.collect {
-                    if (it) {
-                        navigateOnSuccess()
-                    }
-                }
-            }
 
             TextField(
                 value = email,
@@ -108,5 +98,5 @@ fun SignInView(
 @Preview(showBackground = true)
 @Composable
 fun SignInView_Preview() {
-    SignInView(SignInViewModel.fake(), {})
+    SignInView(SignInViewModel.fake())
 }

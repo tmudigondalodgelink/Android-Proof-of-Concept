@@ -1,6 +1,6 @@
 package com.example.presentationmodule
 
-import MainCoordinator
+import ApplicationCoordinator
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,9 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.domainmodule.models.Authentication
 import com.example.domainmodule.usecases.IUserAuthenticatedUseCase
+import com.example.presentationmodule.signin.SignInView
 import com.example.presentationmodule.theme.ArchitecturePOC2Theme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,10 +39,6 @@ class MainActivity : FragmentActivity() {
 fun MainScreen(authenticatedUseCase: IUserAuthenticatedUseCase) {
     val navController = rememberNavController()
 
-    val noBottomNavScreens = setOf("signIn")
-    val hideBottomNav = navController
-        .currentBackStackEntryAsState().value?.destination?.route in noBottomNavScreens
-
     val authenticationState by authenticatedUseCase.execute()
         .collectAsState(initial = Authentication.Unauthenticated)
 
@@ -51,16 +47,21 @@ fun MainScreen(authenticatedUseCase: IUserAuthenticatedUseCase) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (!hideBottomNav) {
-                BottomNavSetup(
-                    navigateTo = { route -> navController.navigate(route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                })
+            when (authenticationState) {
+                is Authentication.Authenticated -> {
+                    BottomNavSetup(
+                        navigateTo = { route -> navController.navigate(route) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    })
+                }
+                is Authentication.Unauthenticated -> {
+                    SignInView()
+                }
             }
         }
     ) { innerPadding ->
-        MainCoordinator(navController, innerPadding)
+        ApplicationCoordinator(navController, innerPadding)
     }
 }
