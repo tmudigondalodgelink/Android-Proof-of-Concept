@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "ArchitecturePOC2"
 include ':app'
+include ':domainmodule'
+include ':datamodule'
+include ':presentationmodule'

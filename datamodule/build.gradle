@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.library'
+    id 'com.apollographql.apollo3' version '3.8.2'
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+    id 'kotlin-kapt'
+}
+
+apply plugin: 'com.google.dagger.hilt.android'
+
+android {
+    namespace 'com.example.datamodule'
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 28
+        targetSdk 35
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    apollo {
+        service("service") {
+            packageName = "com.example.architecturepoc2"
+        }
+    }
+}
+
+dependencies {
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    implementation libs.apollo.runtime
+    implementation libs.kotlinx.serialization.json
+
+    implementation 'com.google.dagger:hilt-android:2.55'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.55'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.55'
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.55'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.55'
+    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.55'
+
+    kapt "com.google.dagger:hilt-compiler:2.55"
+
+    implementation(project(":domainmodule"))
+}
+
+ext {
+    graphQLEndpointTest = 'https://test-api.lodgelink.com/graphql'
+}

@@ -10,6 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/datamodule" />
+            <option value="$PROJECT_DIR$/domainmodule" />
+            <option value="$PROJECT_DIR$/presentationmodule" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
