@@ -44,7 +44,6 @@ fun BookingsCoordinator() {
             }
         }) }
 
-
         composable(BookingsCoordinatorRoutes.NESTED_VIEW_3.value) { NestedView3(navigateToNestedFragment4 = {
             bookingsNavController.navigate(BookingsCoordinatorRoutes.NESTED_FRAGMENT_4.value) {
                 launchSingleTop = true

@@ -1,4 +1,4 @@
-package com.example.datamodule
+package com.example.datamodule.hiltModules
 
 import GraphQLClient
 import android.content.SharedPreferences
@@ -7,7 +7,6 @@ import com.example.datamodule.repositories.AuthenticationRepository
 import com.example.datamodule.repositories.LocalStorageRepository
 import com.example.datamodule.repositories.UserRepository
 import com.example.domainmodule.models.AuthenticationToken
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +20,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class GraphQLModule {
+class RepositoriesModule {
     @Provides
     fun providesGraphQLClient(localStorage: ILocalStorageRepository): IGraphQLClient {
         return GraphQLClient(
