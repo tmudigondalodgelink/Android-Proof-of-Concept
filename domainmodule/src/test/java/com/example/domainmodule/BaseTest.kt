@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.domainmodule
 
 import io.mockk.unmockkAll
 import kotlinx.coroutines.Dispatchers
@@ -8,8 +8,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
-import org.junit.rules.TestRule
 
 open class BaseTest {
     val testDispatcher = StandardTestDispatcher()

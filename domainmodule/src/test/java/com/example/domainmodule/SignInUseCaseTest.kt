@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.domainmodule
 
 import com.example.domainmodule.errors.AuthenticationError
 import com.example.domainmodule.errors.CredentialsParsingError
@@ -16,9 +16,7 @@ import com.example.domainmodule.usecases.ISignInUseCase
 import com.example.domainmodule.usecases.SignInUseCase
 import com.example.domainmodule.utilities.FlowResult
 import com.example.domainmodule.utilities.StorageKey
-import io.mockk.Runs
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
@@ -42,11 +40,6 @@ class SignInUseCaseUnitTest: BaseTest() {
         super.setUp()
         signInUseCase = SignInUseCase(authenticationRepository, localStorageRepository)
 
-    }
-
-    @After
-    override fun tearDown() {
-        super.tearDown()
     }
 
     @Test

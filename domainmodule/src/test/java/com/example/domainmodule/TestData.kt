@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.domainmodule
 
 import com.example.domainmodule.models.Email
 import com.example.domainmodule.models.ID

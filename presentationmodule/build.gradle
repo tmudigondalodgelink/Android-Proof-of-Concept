@@ -86,8 +86,8 @@ dependencies {
 
     kapt "com.google.dagger:hilt-compiler:2.55"
 
-    testImplementation(libs.mockk) // Replace with latest version
-    testImplementation(libs.kotlinx.coroutines.test) // For coroutines testing
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     implementation(project(":domainmodule"))
 }

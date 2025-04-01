@@ -1,4 +1,4 @@
-package com.example.presentationmodule
+package com.example.domainmodule
 
 import com.example.domainmodule.errors.DataError
 import com.example.domainmodule.errors.ExecutionError
@@ -18,7 +18,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class GetMeUseCaseTest: BaseTest() {
+class GetMeUseCaseTest: com.example.domainmodule.BaseTest() {
     private lateinit var getMeUseCase: IGetMeUseCase
     private lateinit var userRepository: IUserRepository
 
@@ -27,11 +27,6 @@ class GetMeUseCaseTest: BaseTest() {
         super.setUp()
         userRepository = mockk<IUserRepository>(relaxed = true)
         getMeUseCase = GetMeUseCase(userRepository)
-    }
-
-    @After
-    override fun tearDown() {
-        super.tearDown()
     }
 
     @Test
