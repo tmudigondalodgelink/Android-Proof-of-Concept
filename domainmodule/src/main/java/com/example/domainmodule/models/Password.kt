@@ -8,10 +8,8 @@ data class Password private constructor(
 ) {
     companion object {
         fun create(value: String?): Password {
-            value?.let {
-                return Password(it)
-            }
-            throw CredentialsParsingError.InvalidPassword()
+            require(!value.isNullOrBlank()) { throw CredentialsParsingError.InvalidPassword() }
+            return Password(value)
         }
     }
 }

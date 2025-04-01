@@ -15,7 +15,7 @@ interface  IGetMeUseCase {
     fun execute(): Flow<FlowResult<User, DataError>>
 }
 
-final class GetMeUseCase(
+class GetMeUseCase(
     private val userRepository: IUserRepository
 ): IGetMeUseCase {
 
