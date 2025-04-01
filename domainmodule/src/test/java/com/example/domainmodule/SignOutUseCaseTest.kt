@@ -8,33 +8,24 @@ import com.example.domainmodule.usecases.SignOutUseCase
 import com.example.domainmodule.utilities.StorageKey
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class SignOutUseCaseTest: BaseTest() {
-    private lateinit var authenticationRepository: IAuthenticationRepository
-    private lateinit var localStorageRepository: ILocalStorageRepository
-    private lateinit var signOutUseCase: ISignOutUseCase
-
-    @Before
-    override fun setUp() {
-        super.setUp()
-        authenticationRepository = mockk(relaxed = true)
-        localStorageRepository = mockk(relaxed = true)
-        signOutUseCase = SignOutUseCase(authenticationRepository, localStorageRepository)
-    }
+    private val authenticationRepository: IAuthenticationRepository = mockk(relaxed = true)
+    private val localStorageRepository: ILocalStorageRepository = mockk(relaxed = true)
+    private val sut: ISignOutUseCase = SignOutUseCase(authenticationRepository, localStorageRepository)
 
     @Test
     fun `execute() should set authentication to Unauthenticated`() {
-        signOutUseCase.execute()
+        sut.execute()
 
         verify { authenticationRepository.setAuthentication(Authentication.Unauthenticated) }
     }
 
     @Test
     fun `execute() should remove auth token from local storage`() {
-        signOutUseCase.execute()
+        sut.execute()
 
         verify { localStorageRepository.removeObject(StorageKey.AUTH_TOKEN) }
     }

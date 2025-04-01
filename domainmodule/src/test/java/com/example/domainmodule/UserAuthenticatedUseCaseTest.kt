@@ -13,18 +13,11 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.first
-import org.junit.Before
 import org.junit.Test
 
 class UserAuthenticatedUseCaseTest: BaseTest() {
-    private lateinit var authenticationRepository: IAuthenticationRepository
-    private lateinit var userAuthenticatedUseCase: IUserAuthenticatedUseCase
-
-    @Before
-    override fun setUp() {
-        authenticationRepository = mockk(relaxed = true)
-        userAuthenticatedUseCase = UserAuthenticatedUseCase(authenticationRepository)
-    }
+    private val authenticationRepository: IAuthenticationRepository = mockk(relaxed = true)
+    private val sut: IUserAuthenticatedUseCase = UserAuthenticatedUseCase(authenticationRepository)
 
     @Test
     fun `execute() should return authentication state from repository`() = runTest {
@@ -33,7 +26,7 @@ class UserAuthenticatedUseCaseTest: BaseTest() {
         val authenticationFlow: StateFlow<Authentication> = MutableStateFlow(expectedAuthentication)
         every { authenticationRepository.observeAuthentication() } returns authenticationFlow
 
-        val result = userAuthenticatedUseCase.execute().take(1).first()
+        val result = sut.execute().take(1).first()
         assertEquals(expectedAuthentication, result)
 
         verify { authenticationRepository.observeAuthentication() }

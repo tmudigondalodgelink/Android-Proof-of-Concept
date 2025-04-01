@@ -24,23 +24,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
 class SignInUseCaseUnitTest: BaseTest() {
-    private lateinit var signInUseCase: ISignInUseCase
     private val authenticationRepository: IAuthenticationRepository = mockk(relaxed = true)
     private val localStorageRepository: ILocalStorageRepository = mockk(relaxed = true)
-
-    @Before
-    override fun setUp() {
-        super.setUp()
-        signInUseCase = SignInUseCase(authenticationRepository, localStorageRepository)
-
-    }
+    private val sut: ISignInUseCase = SignInUseCase(authenticationRepository, localStorageRepository)
 
     @Test
     fun `execute() should return User successfully when credentials are valid`(): Unit = runTest {
@@ -53,7 +45,7 @@ class SignInUseCaseUnitTest: BaseTest() {
 
         every { authenticationRepository.signIn(any(), any()) } returns flowOf(FlowResult.Success(signInResult))
 
-        val result = signInUseCase.execute(email.value, password).first()
+        val result = sut.execute(email.value, password).first()
 
         assertEquals(expectedResult, result)
 
@@ -67,7 +59,7 @@ class SignInUseCaseUnitTest: BaseTest() {
     fun `execute() should return failure when email format is invalid`() = runTest {
         val expectedError = AuthenticationError.CredentialsParsingError(CredentialsParsingError.InvalidEmail())
 
-        val result = signInUseCase.execute("invalid-email", "ValidPass123").first()
+        val result = sut.execute("invalid-email", "ValidPass123").first()
 
         assertTrue(result is FlowResult.Failure)
         val actualError = (result as FlowResult.Failure).error
@@ -80,7 +72,7 @@ class SignInUseCaseUnitTest: BaseTest() {
         val invalidPassword = ""
         val expectedError = AuthenticationError.CredentialsParsingError(CredentialsParsingError.InvalidPassword())
 
-        val result = signInUseCase.execute("test@example.com", invalidPassword).first()
+        val result = sut.execute("test@example.com", invalidPassword).first()
 
         assertTrue(result is FlowResult.Failure)
         val actualError = (result as FlowResult.Failure).error
@@ -96,7 +88,7 @@ class SignInUseCaseUnitTest: BaseTest() {
 
         every { authenticationRepository.signIn(any(), any()) } returns flowOf(FlowResult.Failure(expectedError))
 
-        val result = signInUseCase.execute(email, password).first()
+        val result = sut.execute(email, password).first()
 
         assertTrue(result is FlowResult.Failure)
         assertEquals(expectedError.message, (result as FlowResult.Failure).error.message)
@@ -120,7 +112,7 @@ class SignInUseCaseUnitTest: BaseTest() {
 
         every { authenticationRepository.signIn(any(), any()) } returns flow
 
-        val result = signInUseCase.execute(email, password).first()
+        val result = sut.execute(email, password).first()
 
         val expectedResult: FlowResult<User, AuthenticationError> = FlowResult.Success(user)
         assertEquals(expectedResult, result)

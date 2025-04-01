@@ -13,21 +13,13 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class GetMeUseCaseTest: com.example.domainmodule.BaseTest() {
-    private lateinit var getMeUseCase: IGetMeUseCase
-    private lateinit var userRepository: IUserRepository
-
-    @Before
-    override fun setUp() {
-        super.setUp()
-        userRepository = mockk<IUserRepository>(relaxed = true)
-        getMeUseCase = GetMeUseCase(userRepository)
-    }
+    private val userRepository: IUserRepository = mockk<IUserRepository>(relaxed = true)
+    private val sut: IGetMeUseCase = GetMeUseCase(userRepository)
 
     @Test
     fun `execute() should return user successfully`(): Unit = runTest {
@@ -36,7 +28,7 @@ class GetMeUseCaseTest: com.example.domainmodule.BaseTest() {
 
         every { userRepository.getMe() } returns flowOf(expectedResult)
 
-        val result = getMeUseCase.execute().first()
+        val result = sut.execute().first()
 
         assertEquals(expectedResult, result)
 
@@ -50,7 +42,7 @@ class GetMeUseCaseTest: com.example.domainmodule.BaseTest() {
 
         every { userRepository.getMe() } returns flowOf(expectedResult)
 
-        val result = getMeUseCase.execute().first()
+        val result = sut.execute().first()
 
         assertEquals(expectedResult, result)
 
