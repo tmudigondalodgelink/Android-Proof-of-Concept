@@ -18,7 +18,7 @@ interface ISignInViewModel {
 
     fun setEmail(email: String)
     fun setPassword(password: String)
-    fun singIn()
+    fun signIn()
     fun resetState()
 }
 
@@ -38,7 +38,7 @@ class SignInViewModel @Inject constructor(
         this.password.value = password
     }
 
-    override fun singIn() {
+    override fun signIn() {
         signInUseCase.execute(email.value, password.value)
             .collectInScope(viewModelScope) { result ->
                 when (result) {
