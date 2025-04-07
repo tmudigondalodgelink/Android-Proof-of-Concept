@@ -1,4 +1,4 @@
-package com.example.datamodule.hiltModules
+package com.example.architecturepoc2.modules
 
 import GraphQLClient
 import android.content.SharedPreferences
